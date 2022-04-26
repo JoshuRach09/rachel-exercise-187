@@ -1,0 +1,85 @@
+//AUTHOR: JOSHUA RACHEL
+//COURSE: CPT 187
+//PURPOSE: Writes the order information from the list down, if any.
+//Stores the information for later use.
+//CREATEDATE:04/18/2022
+
+package edu.cpt187.rachel.exercise6;
+
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+//Begin WriteOrder
+public class WriteOrder 
+{
+
+	//declare and initialize all class attributes
+	private boolean fileFoundFlag;
+	private String masterFileName = "";
+	private int recordCount = 0;
+
+
+	//Constructor non-default
+	public WriteOrder(String borrowedFileName) 
+	{
+		//assigns value to masterfileName
+		masterFileName = borrowedFileName;
+	}//END of Constructor non-default
+
+
+	//Begin Setters
+
+	//method to write the order and store information.
+	public void setWriteOrder(int borrowedItemID, String borrowedItemName, double borrowedItemPrice,
+			int borrowedItemQuantity, double borrowedOrderCost)
+	{
+		//try block for file
+		try
+		{	
+			//attempts to open the file - appends if found
+			PrintWriter filePW = new PrintWriter(new FileWriter(masterFileName, true));
+
+			//prints the values from the file
+			filePW.printf("%n%d\t%s\t%.2f\t%d\t%.2f", borrowedItemID, borrowedItemName, borrowedItemPrice, borrowedItemQuantity, borrowedOrderCost);
+			//increments recordCount
+			recordCount++;
+			//flags fileFound as true
+			fileFoundFlag = true;
+			//close the PrintWriter/File
+			filePW.close();
+		}//END of try
+
+		//catch block for errors
+		catch(IOException ex)
+		{
+			//flags filefoundflag as false
+			fileFoundFlag = false;
+		}//END of Catch
+
+	}//END of setWriteOrder SETTER
+	//END Setters 
+
+	//BEGIN GETTERS
+	//method to find the found flag
+	public boolean getFileFoundFlag()
+	{
+		//returns flag
+		return fileFoundFlag;
+	}//END of getFileFoundFlag GETTER
+
+	//method to determine the file name
+	public String getFileName()
+	{
+		//returns fileName
+		return masterFileName;
+	}//END of getFileName GETTER
+
+	//method to find the record count
+	public int getRecordCount()
+	{
+		//return record count
+		return recordCount;
+	}//END of getRecordCount GETTER
+
+}//END WriteOrder
